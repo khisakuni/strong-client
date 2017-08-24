@@ -1,7 +1,10 @@
 <template>
   <div class="tile-container" v-bind:style="{ 'background-image': 'url(' + imageUrl + ')' }">
-    <h3>{{workout.name}}</h3>
-    <div class="tile-overlay"></div>
+    <div class="tile-overlay">
+      <div class="tile-body">
+        <h3 class="tile-title">{{workout.name}}</h3>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,6 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../assets/styles/colors.scss';
 .tile-container {
   margin: 10px;
   min-height: 368px;
@@ -28,6 +32,8 @@ export default {
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center;
+  cursor: pointer;
+
 }
 
 .tile-overlay {
@@ -38,5 +44,25 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, .6);
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, .8);
+  }
+}
+
+.tile-body {
+  height: 90%; 
+  width:100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-title {
+  text-transform: uppercase;
+  color: $white;
+  border: 1px solid $white;
+  padding: 20px 60px;
 }
 </style>

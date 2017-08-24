@@ -10,14 +10,13 @@
 @import '../assets/styles/colors.scss';
 
 .hero-text {
-  color: $white;
+  color: $dark-grey;
   display: inline-block;
   padding: 20px 60px;
-  border: 1px solid $white;
+  border: 1px solid $dark-grey;
 }
 
 .hero-container {
-  padding: 20px 0px;
-  background-color: $dark-grey;
+  padding-top: 20px;
 }
 </style>
