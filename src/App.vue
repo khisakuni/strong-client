@@ -1,23 +1,35 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <div class="container app-body">
+      <hero></hero>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import Hero from './components/hero'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: { Hero }
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+@import './assets/styles/colors.scss';
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  min-height: 100%;
+  background-color: $dark-grey;
+}
+
+.app-body {
+  background-color: $white;
+  height: 100%;
 }
 </style>
