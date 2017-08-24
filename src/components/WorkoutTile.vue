@@ -1,10 +1,12 @@
 <template>
   <div class="tile-container" v-bind:style="{ 'background-image': 'url(' + imageUrl + ')' }">
-    <div class="tile-overlay">
-      <div class="tile-body">
-        <h3 class="tile-title">{{workout.name}}</h3>
+    <router-link :to="showPagePath">
+      <div class="tile-overlay">
+        <div class="tile-body">
+          <h3 class="tile-title">{{workout.name}}</h3>
+        </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -14,7 +16,10 @@ export default {
   props: ['workout'],
   computed: {
     imageUrl: function () {
-      return `https://instagram.com/p/${this.workout.instagramId}/media`
+      return `https://instagram.com/p/${this.workout.instagramId}/media?size=m`
+    },
+    showPagePath: function () {
+      return `/workouts/${this.workout.id}`
     }
   }
 }
@@ -22,6 +27,7 @@ export default {
 
 <style scoped lang="scss">
 @import '../assets/styles/colors.scss';
+
 .tile-container {
   margin: 10px;
   min-height: 368px;

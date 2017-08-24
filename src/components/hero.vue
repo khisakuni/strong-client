@@ -1,7 +1,9 @@
 <template>
   <div class="has-text-centered">
     <div class="hero-container">
-      <h1 class="hero-text">Strong</h1>
+      <router-link to="/">
+        <h1 class="hero-text">Strong</h1>
+      </router-link>
     </div>
   </div>
 </template>
