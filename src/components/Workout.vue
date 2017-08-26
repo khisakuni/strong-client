@@ -51,12 +51,7 @@ export default {
   methods: {
     getWorkout: function () {
       get(this.apiURL)
-        .then(res => {
-          this.workout = res
-          this.name = this.workout.name
-          this.description = this.workout.description
-          this.instagramId = this.workout.instagramId
-        })
+        .then(this.handleSuccess)
         .catch(err => { this.error = err })
     },
     toggleEditMode: function () {
@@ -66,12 +61,15 @@ export default {
       put(this.apiURL, { body: this.workoutJSON })
         .then(res => {
           this.toggleEditMode()
-          this.workout = res
-          this.name = this.workout.name
-          this.description = this.workout.description
-          this.instagramId = this.workout.instagramId
+          this.handleSuccess(res)
         })
         .catch(err => { this.error = err })
+    },
+    handleSuccess: function (response) {
+      this.workout = response
+      this.name = this.workout.name
+      this.description = this.workout.description
+      this.instagramId = this.workout.instagramId
     }
   },
   computed: {
