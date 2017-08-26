@@ -39,7 +39,6 @@ export default {
   background-repeat:   no-repeat;
   background-position: center center;
   cursor: pointer;
-
 }
 
 .tile-overlay {
@@ -58,7 +57,7 @@ export default {
 }
 
 .tile-body {
-  height: 90%; 
+  height: 90%;
   width:100%;
   display:flex;
   align-items: center;

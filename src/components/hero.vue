@@ -1,12 +1,35 @@
 <template>
-  <div class="has-text-centered">
+  <div>
     <div class="hero-container">
-      <router-link to="/">
-        <h1 class="hero-text">Strong</h1>
-      </router-link>
+      <div class="columns">
+        <div class="column is-one-third">
+        </div>
+        <div class="column is-one-third has-centered-text">
+          <router-link to="/">
+            <h1 class="hero-text">Strong</h1>
+          </router-link>
+        </div>
+        <div class="column is-one-third action-container">
+          <slot name="action"></slot>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'hero',
+  data: () => ({
+    modalIsOpen: false
+  }),
+  methods: {
+    toggleModal: function () {
+      this.modalIsOpen = !this.modalIsOpen
+    }
+  }
+}
+</script>
 
 <style scoped lang="scss">
 @import '../assets/styles/colors.scss';
@@ -21,4 +44,9 @@
 .hero-container {
   padding-top: 20px;
 }
+
+.action-container {
+  padding-top: 30px;
+}
+
 </style>

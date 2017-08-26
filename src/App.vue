@@ -1,18 +1,14 @@
 <template>
   <div id="app">
     <div class="container app-body">
-      <hero></hero>
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import Hero from './components/hero'
-
 export default {
-  name: 'app',
-  components: { Hero }
+  name: 'app'
 }
 </script>
 

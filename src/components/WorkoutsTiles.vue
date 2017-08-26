@@ -33,7 +33,5 @@ export default {
 <style scoped lang="scss">
 @import '../assets/styles/colors.scss';
 
-.workouts-container {
-}
 </style>
 
