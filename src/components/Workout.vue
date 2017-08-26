@@ -1,39 +1,92 @@
 <template>
   <div>
+    <hero>
+      <div slot="action">
+        <b-dropdown v-if="!isEditMode">
+          <div slot="trigger" class="action-button">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </div>
+
+          <b-dropdown-item @click="toggleEditMode">Edit</b-dropdown-item>
+          <b-dropdown-item>Delete</b-dropdown-item>
+        </b-dropdown>
+
+        <div v-if="isEditMode" class="action-button" @click="saveWorkout">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </div>
+      </div>
+    </hero>
     <section class="hero" v-bind:style="{ 'background-image': 'url(' + imageUrl + ')' }">
       <div class="hero-overlay">
-        <h1>{{workout.name}}</h1>
+        <h1 v-if="!isEditMode">{{workout.name}}</h1>
+        <input v-if="isEditMode" type="text" v-model="name" class="name-input" />
       </div>
     </section>
     <article>
-      <pre>{{workout.description}}</pre>
+      <pre v-if="!isEditMode">{{workout.description}}</pre>
+      <textarea v-if="isEditMode" rows="4" cols="50" class="description-input" v-model="description">
+      </textarea>
     </article>
   </div>
 </template>
 
 <script>
-import { get } from '@/util/http'
+import { get, put } from '@/util/http'
+import Hero from '@/components/hero'
 
 export default {
   props: ['id'],
+  components: { Hero },
   mounted: function () {
     this.getWorkout()
   },
   data: () => ({
     workout: {},
-    error: null
+    error: null,
+    isEditMode: false,
+    name: '',
+    description: '',
+    instagramId: ''
   }),
   methods: {
     getWorkout: function () {
-      const path = `${process.env.API_DOMAIN}/api/v1/workouts/${this.id}`
-      get(path)
-        .then(res => { this.workout = res })
+      get(this.apiURL)
+        .then(res => {
+          this.workout = res
+          this.name = this.workout.name
+          this.description = this.workout.description
+          this.instagramId = this.workout.instagramId
+        })
+        .catch(err => { this.error = err })
+    },
+    toggleEditMode: function () {
+      this.isEditMode = !this.isEditMode
+    },
+    saveWorkout: function () {
+      put(this.apiURL, { body: this.workoutJSON })
+        .then(res => {
+          this.toggleEditMode()
+          this.workout = res
+          this.name = this.workout.name
+          this.description = this.workout.description
+          this.instagramId = this.workout.instagramId
+        })
         .catch(err => { this.error = err })
     }
   },
   computed: {
     imageUrl: function () {
       return `https://instagram.com/p/${this.workout.instagramId}/media?size=l`
+    },
+    workoutJSON: function () {
+      return {
+        name: this.name,
+        description: this.description,
+        instagramId: this.instagramId
+      }
+    },
+    apiURL: function () {
+      return `${process.env.API_DOMAIN}/api/v1/workouts/${this.id}`
     }
   }
 }
@@ -82,5 +135,32 @@ section {
 pre {
   padding-top: 20px;
   text-align: left;
+}
+
+.action-button {
+  border-radius: 50%;
+  border: 1px solid $dark-grey;
+  color: $dark-grey;
+  padding: 10px 13px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.name-input {
+  background: unset;
+  color: $white;
+  padding: 20px 80px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 30px;
+  border: 3px solid $white;
+}
+
+.description-input {
+  text-align: left;
+  width: 100%;
+  margin-top: 20px;
+  font-family: 'Varela', sans-serif;
 }
 </style>

@@ -22,12 +22,7 @@ export default {
   name: 'hero',
   data: () => ({
     modalIsOpen: false
-  }),
-  methods: {
-    toggleModal: function () {
-      this.modalIsOpen = !this.modalIsOpen
-    }
-  }
+  })
 }
 </script>
 
