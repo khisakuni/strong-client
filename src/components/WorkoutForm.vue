@@ -6,7 +6,7 @@
       </b-field>
 
       <b-field label="Description">
-        <b-input v-model="description" maxlength="400" type="textarea" placeholder="Description of workout..."></b-input>
+        <b-input v-model="description" type="textarea" placeholder="Description of workout..."></b-input>
       </b-field>
 
       <div class="field">
