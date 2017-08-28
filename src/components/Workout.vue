@@ -76,11 +76,7 @@ export default {
     },
     deleteWorkout: function () {
       if (window.confirm(`Are you sure you want to delete the workout: ${this.workout.name}?`)) {
-        destroy(this.apiURL)
-          .then(() => {
-            console.log('>>>>', this.$router)
-            this.$router.push('/')
-          })
+        destroy(this.apiURL).then(() => { this.$router.push('/') })
       }
     }
   },
