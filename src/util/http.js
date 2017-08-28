@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import 'whatwg-fetch'
 
 const formatRequest = (url, { method, body } = { body: {} }) => {
   const params = {
