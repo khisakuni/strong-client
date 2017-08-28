@@ -8,7 +8,7 @@
           </div>
 
           <b-dropdown-item @click="toggleEditMode">Edit</b-dropdown-item>
-          <b-dropdown-item>Delete</b-dropdown-item>
+          <b-dropdown-item @click="deleteWorkout">Delete</b-dropdown-item>
         </b-dropdown>
 
         <div v-if="isEditMode" class="action-button" @click="saveWorkout">
@@ -18,6 +18,9 @@
     </hero>
     <section class="hero" v-bind:style="{ 'background-image': 'url(' + imageUrl + ')' }">
       <div class="hero-overlay">
+        <div class="image-edit-button" v-if="isEditMode">
+          <p class="insta-link">https://instagram.com/p/<input type="text" v-model="instagramId" /></p>
+        </div>
         <h1 v-if="!isEditMode">{{workout.name}}</h1>
         <input v-if="isEditMode" type="text" v-model="name" class="name-input" />
       </div>
@@ -31,7 +34,7 @@
 </template>
 
 <script>
-import { get, put } from '@/util/http'
+import { get, put, destroy } from '@/util/http'
 import Hero from '@/components/hero'
 
 export default {
@@ -70,6 +73,15 @@ export default {
       this.name = this.workout.name
       this.description = this.workout.description
       this.instagramId = this.workout.instagramId
+    },
+    deleteWorkout: function () {
+      if (window.confirm(`Are you sure you want to delete the workout: ${this.workout.name}?`)) {
+        destroy(this.apiURL)
+          .then(() => {
+            console.log('>>>>', this.$router)
+            this.$router.push('/')
+          })
+      }
     }
   },
   computed: {
@@ -160,5 +172,15 @@ pre {
   width: 100%;
   margin-top: 20px;
   font-family: 'Varela', sans-serif;
+}
+
+.image-edit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.insta-link {
+  background: $white;
 }
 </style>
