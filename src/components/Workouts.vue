@@ -3,6 +3,7 @@
     <hero>
       <h1 slot="action" class="add-action" @click="toggleModal">+</h1>
     </hero>
+    <h1 v-if="loading">Loading...</h1>
     <div class="modal" v-bind:class="{ 'is-active': modalIsOpen }">
       <div class="modal-background" @click="toggleModal"></div>
       <div class="modal-content">
@@ -35,14 +36,22 @@ export default {
   data: () => ({
     workouts: [],
     error: null,
-    modalIsOpen: false
+    modalIsOpen: false,
+    loading: false
   }),
   methods: {
     getWorkouts: function () {
+      this.loading = true
       const path = `${process.env.API_DOMAIN}/api/v1/workouts`
       get(path)
-        .then(res => { this.workouts = res })
-        .catch(error => { this.error = error })
+        .then(res => {
+          this.workouts = res
+          this.loading = false
+        })
+        .catch(error => {
+          this.error = error
+          this.loading = false
+        })
     },
     toggleModal: function () {
       this.modalIsOpen = !this.modalIsOpen
